@@ -10,7 +10,7 @@ class Search extends React.Component {
     this.state = {
       loading: false,
       data: [],
-      query: 'kanye'
+      query: ''
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
@@ -28,15 +28,9 @@ class Search extends React.Component {
           limit}&linked_partitioning=1`
       )
       .then(response =>
-        this.setState(
-          {
-            data: response.data.collection
-          },
-          () =>
-            console.log(
-              response.data.collection.forEach(obj => console.log(obj.title))
-            )
-        )
+        this.setState({
+          data: response.data.collection
+        })
       )
       .catch(error => console.error(error));
   }
@@ -46,7 +40,9 @@ class Search extends React.Component {
       <View style={styles.searchContainer}>
         <TextInput
           placeholder="search"
+          autoCorrect={false}
           onChangeText={text => this.setState({ query: text })}
+          onSubmitEditing={this.handleSearch}
         />
         {this.state.data.map((obj, i) => (
           <Text key={i}>{obj.title}</Text>
