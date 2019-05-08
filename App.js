@@ -3,28 +3,22 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Search from './components/search.js';
 
 class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.navContainer}>
         <Text>+ create</Text>
-        {/* <TextInput placeholder="search" /> */}
       </View>
     );
   }
 }
 class SearchScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: ''
-    };
-  }
   render() {
     return (
       <View style={styles.navContainer}>
-        <TextInput placeholder="search" />
+        <Search />
       </View>
     );
   }
@@ -35,7 +29,6 @@ class ChatScreen extends React.Component {
     return (
       <View style={styles.navContainer}>
         <Text>let's chat!</Text>
-        {/* <TextInput placeholder="search" /> */}
       </View>
     );
   }
@@ -74,7 +67,7 @@ export default createAppContainer(
       }
     },
     {
-      initialRouteName: 'Home',
+      initialRouteName: 'Search',
       order: ['Home', 'Search', 'Chat'],
       // defaultNavigationOptions: {
       //   headerStyle: {
