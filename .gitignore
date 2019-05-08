@@ -5,3 +5,8 @@ npm-debug.*
 *.p12
 *.key
 *.mobileprovision
+
+# ignored files
+config.js
+package-lock.json
+
