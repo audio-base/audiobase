@@ -8,7 +8,7 @@ import Search from './components/search.js';
 class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={styles.navContainer}>
+      <View style={styles.appContainer}>
         <Text>+ create</Text>
       </View>
     );
@@ -17,7 +17,7 @@ class HomeScreen extends React.Component {
 class SearchScreen extends React.Component {
   render() {
     return (
-      <View style={styles.navContainer}>
+      <View style={styles.appContainer}>
         <Search />
       </View>
     );
@@ -27,7 +27,7 @@ class SearchScreen extends React.Component {
 class ChatScreen extends React.Component {
   render() {
     return (
-      <View style={styles.navContainer}>
+      <View style={styles.appContainer}>
         <Text>let's chat!</Text>
       </View>
     );
@@ -80,9 +80,9 @@ export default createAppContainer(
 );
 
 const styles = StyleSheet.create({
-  navContainer: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'flex-start',
     // justifyContent: 'center',
     top: 30,
