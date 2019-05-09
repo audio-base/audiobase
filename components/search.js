@@ -8,9 +8,16 @@ import {
   Button
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-import SC_KEY from '../config.js';
+import { SC_KEY } from '../config.js';
 import axios from 'axios';
-// import search from '../soundcloud.js';
+import { db } from '../config.js';
+
+let addItem = (item, title) => {
+  db.ref('/songs').push({
+    uri: item,
+    title: title
+  });
+};
 
 class Search extends React.Component {
   constructor(props) {
@@ -33,7 +40,6 @@ class Search extends React.Component {
     let limit = 10;
     let page = 0;
     let query = this.state.query;
-    // e.preventDefault;
     axios
       .get(
         `https://api-v2.soundcloud.com/search/tracks?q=${query}&client_id=${SC_KEY}&limit=${limit}&offset=${page *
@@ -53,7 +59,7 @@ class Search extends React.Component {
         title: title,
         album: album
       },
-      () => console.log(this.state.album)
+      () => addItem(this.state.uri, this.state.title)
     );
   }
 
@@ -78,9 +84,7 @@ class Search extends React.Component {
                   }
                 }}
                 title={obj.title}
-              >
-                {/* {obj.title} */}
-              </ListItem>
+              />
               <Button
                 title="add"
                 onPress={() =>
@@ -115,7 +119,7 @@ class Search extends React.Component {
 
 const styles = StyleSheet.create({
   searchContainer: {
-    width: 390
+    width: '100%'
   },
   searchBar: {
     height: 40,
