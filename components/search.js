@@ -1,5 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+  Button
+} from 'react-native';
+import { List, ListItem } from 'react-native-elements';
 import SC_KEY from '../config.js';
 import axios from 'axios';
 // import search from '../soundcloud.js';
@@ -10,9 +18,13 @@ class Search extends React.Component {
     this.state = {
       loading: false,
       data: [],
-      query: ''
+      query: '',
+      uri: '',
+      title: '',
+      album: ''
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.addSong = this.addSong.bind(this);
   }
   componentDidMount() {
     this.handleSearch();
@@ -34,28 +46,82 @@ class Search extends React.Component {
       )
       .catch(error => console.error(error));
   }
+  addSong(uri, title, album) {
+    this.setState(
+      {
+        uri: uri,
+        title: title,
+        album: album
+      },
+      () => console.log(this.state.album)
+    );
+  }
 
   render() {
     return (
       <View style={styles.searchContainer}>
         <TextInput
+          style={styles.searchBar}
           placeholder="search"
           autoCorrect={false}
           onChangeText={text => this.setState({ query: text })}
           onSubmitEditing={this.handleSearch}
         />
-        {this.state.data.map((obj, i) => (
-          <Text key={i}>{obj.title}</Text>
-        ))}
+        {this.state.data.map((obj, i) => {
+          return (
+            <View key={i}>
+              <ListItem
+                leftAvatar={{
+                  source: {
+                    uri:
+                      'https://i1.sndcdn.com/artworks-000473021343-9xjedj-large.jpg'
+                  }
+                }}
+                title={obj.title}
+              >
+                {/* {obj.title} */}
+              </ListItem>
+              <Button
+                title="add"
+                onPress={() =>
+                  this.addSong(
+                    obj.uri,
+                    obj.title
+                    // obj.user.visuals.visuals[0].visual_url
+                  )
+                }
+              />
+            </View>
+          );
+        })}
       </View>
+      // <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+      //   <FlatList
+      //     data={this.state.data}
+      //     renderItem={this.state.data.map((item, i) => (
+      //       <ListItem
+      //         roundAvatar
+      //         title={`${item.title}`}
+      //         avatar={{ uri: item.artwork_url }}
+      //         containerStyle={{ borderBottomWidth: 0 }}
+      //       />
+      //     ))}
+      //     keyExtractor={item => item.title}
+      //   />
+      // </List>
     );
   }
 }
 
 const styles = StyleSheet.create({
   searchContainer: {
-    // flex: 1,
-    // backgroundColor: 'black'
+    width: 390
+  },
+  searchBar: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
   }
 });
+
 export default Search;
