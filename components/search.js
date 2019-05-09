@@ -7,10 +7,9 @@ import {
   FlatList,
   Button
 } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
-import { SC_KEY } from '../config.js';
+import { List, ListItem, SearchBar } from 'react-native-elements';
+import { SC_KEY, db } from '../config.js';
 import axios from 'axios';
-import { db } from '../config.js';
 
 let addItem = (item, title) => {
   db.ref('/songs').push({
@@ -66,12 +65,16 @@ class Search extends React.Component {
   render() {
     return (
       <View style={styles.searchContainer}>
-        <TextInput
+        <SearchBar
           style={styles.searchBar}
+          clearTextOnFocus={false}
           placeholder="search"
           autoCorrect={false}
           onChangeText={text => this.setState({ query: text })}
+          value={this.state.query}
           onSubmitEditing={this.handleSearch}
+          platform="ios"
+          // showLoading={true}
         />
         {this.state.data.map((obj, i) => {
           return (

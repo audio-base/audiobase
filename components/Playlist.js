@@ -45,6 +45,7 @@ class Playlist extends React.Component {
                 }
               }}
               title={song.title}
+              // onPress={}
             />
             {/* <Button title="-" /> */}
           </View>
