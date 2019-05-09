@@ -15,7 +15,7 @@ let addItem = item => {
     name: item
   });
 };
-let songsRef = db.ref('/songs');
+let songsRef = db.ref('/songs'); //grab songs from the key songs in db
 
 class Playlist extends React.Component {
   constructor(props) {
