@@ -10,6 +10,7 @@ import {
 import { List, ListItem, SearchBar } from 'react-native-elements';
 import { SC_KEY, db } from '../config.js';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 let addItem = (item, title) => {
   db.ref('/songs').push({
@@ -87,15 +88,20 @@ class Search extends React.Component {
                   }
                 }}
                 title={obj.title}
-              />
-              <Button
-                title="add"
-                onPress={() =>
-                  this.addSong(
-                    obj.uri,
-                    obj.title
-                    // obj.user.visuals.visuals[0].visual_url
-                  )
+                rightElement={
+                  <Icon
+                    containerStyle={{ alignSelf: 'flex-start' }}
+                    type="material"
+                    color="#C8C8C8"
+                    name="md-add"
+                    onPress={() =>
+                      this.addSong(
+                        obj.uri,
+                        obj.title
+                        // obj.user.visuals.visuals[0].visual_url
+                      )
+                    }
+                  />
                 }
               />
             </View>

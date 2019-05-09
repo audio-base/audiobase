@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity
+} from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -35,7 +41,7 @@ class ChatScreen extends React.Component {
   onSubmitEdit = () => this.setState({ name: this.state.text });
 
   render() {
-    if (this.state.name === ''){
+    if (this.state.name === '') {
       return (
         <View style={styles.chatLogin}>
           <Text style={styles.title}>Enter your name:</Text>
@@ -44,17 +50,15 @@ class ChatScreen extends React.Component {
             textAlign="center"
             autoCorrect={false}
             onSubmitEditing={this.onSubmitEdit}
-            onChangeText={(text) => this.setState({ text })}
+            onChangeText={text => this.setState({ text })}
           />
           <TouchableOpacity onPress={this.onSubmitEdit}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
-      )
-    } else {
-      return (
-          <Chatbox name={this.state.name}/>
       );
+    } else {
+      return <Chatbox name={this.state.name} />;
     }
     return (
       <View style={styles.appContainer}>
@@ -97,7 +101,7 @@ export default createAppContainer(
       }
     },
     {
-      initialRouteName: 'Home',
+      initialRouteName: 'Search',
       order: ['Home', 'Search', 'Chat'],
       // defaultNavigationOptions: {
       //   headerStyle: {
@@ -121,6 +125,6 @@ const styles = StyleSheet.create({
   chatLogin: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'center'
   }
 });

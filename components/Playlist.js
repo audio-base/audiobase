@@ -8,14 +8,14 @@ import {
   Button
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import { db } from '../config.js';
 let addItem = item => {
   db.ref('/items').push({
     name: item
   });
 };
-let songsRef = db.ref('/songs');
+let songsRef = db.ref('/songs'); //grab songs from the key songs in db
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -28,8 +28,18 @@ class Playlist extends React.Component {
     songsRef.on('value', snapshot => {
       let data = snapshot.val();
       let songs = Object.values(data);
+      let i = 0;
+      for (let key in data) {
+        songs[i].id = key;
+        i++;
+      }
       this.setState({ songs });
     });
+  }
+
+  handleRemove(id) {
+    // console.log(id);
+    return songsRef.child(id).remove();
   }
 
   render() {
@@ -45,7 +55,15 @@ class Playlist extends React.Component {
                 }
               }}
               title={song.title}
-              // onPress={}
+              rightElement={
+                <Icon
+                  containerStyle={{ alignSelf: 'flex-start' }}
+                  type="material"
+                  color="#C8C8C8"
+                  name="md-close"
+                  onPress={() => this.handleRemove(song.id)}
+                />
+              }
             />
             {/* <Button title="-" /> */}
           </View>
