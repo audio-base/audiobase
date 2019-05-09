@@ -1,8 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
-import SC_KEY from '../config.js';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  FlatList,
+  Button
+} from 'react-native';
+import { List, ListItem, SearchBar } from 'react-native-elements';
+import { SC_KEY, db } from '../config.js';
 import axios from 'axios';
-// import search from '../soundcloud.js';
+
+let addItem = (item, title) => {
+  db.ref('/songs').push({
+    uri: item,
+    title: title
+  });
+};
 
 class Search extends React.Component {
   constructor(props) {
@@ -10,9 +24,13 @@ class Search extends React.Component {
     this.state = {
       loading: false,
       data: [],
-      query: ''
+      query: '',
+      uri: '',
+      title: '',
+      album: ''
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.addSong = this.addSong.bind(this);
   }
   componentDidMount() {
     this.handleSearch();
@@ -21,7 +39,6 @@ class Search extends React.Component {
     let limit = 10;
     let page = 0;
     let query = this.state.query;
-    // e.preventDefault;
     axios
       .get(
         `https://api-v2.soundcloud.com/search/tracks?q=${query}&client_id=${SC_KEY}&limit=${limit}&offset=${page *
@@ -34,28 +51,84 @@ class Search extends React.Component {
       )
       .catch(error => console.error(error));
   }
+  addSong(uri, title, album) {
+    this.setState(
+      {
+        uri: uri,
+        title: title,
+        album: album
+      },
+      () => addItem(this.state.uri, this.state.title)
+    );
+  }
 
   render() {
     return (
       <View style={styles.searchContainer}>
-        <TextInput
+        <SearchBar
+          style={styles.searchBar}
+          clearTextOnFocus={false}
           placeholder="search"
           autoCorrect={false}
           onChangeText={text => this.setState({ query: text })}
+          value={this.state.query}
           onSubmitEditing={this.handleSearch}
+          platform="ios"
+          // showLoading={true}
         />
-        {this.state.data.map((obj, i) => (
-          <Text key={i}>{obj.title}</Text>
-        ))}
+        {this.state.data.map((obj, i) => {
+          return (
+            <View key={i}>
+              <ListItem
+                leftAvatar={{
+                  source: {
+                    uri:
+                      'https://i1.sndcdn.com/artworks-000473021343-9xjedj-large.jpg'
+                  }
+                }}
+                title={obj.title}
+              />
+              <Button
+                title="add"
+                onPress={() =>
+                  this.addSong(
+                    obj.uri,
+                    obj.title
+                    // obj.user.visuals.visuals[0].visual_url
+                  )
+                }
+              />
+            </View>
+          );
+        })}
       </View>
+      // <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+      //   <FlatList
+      //     data={this.state.data}
+      //     renderItem={this.state.data.map((item, i) => (
+      //       <ListItem
+      //         roundAvatar
+      //         title={`${item.title}`}
+      //         avatar={{ uri: item.artwork_url }}
+      //         containerStyle={{ borderBottomWidth: 0 }}
+      //       />
+      //     ))}
+      //     keyExtractor={item => item.title}
+      //   />
+      // </List>
     );
   }
 }
 
 const styles = StyleSheet.create({
   searchContainer: {
-    // flex: 1,
-    // backgroundColor: 'black'
+    width: '100%'
+  },
+  searchBar: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
   }
 });
+
 export default Search;

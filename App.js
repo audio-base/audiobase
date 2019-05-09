@@ -5,12 +5,13 @@ import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chatbox from './components/Chat/Chatbox.js';
 import Search from './components/search.js';
-
+import Playlist from './components/Playlist.js';
 class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.appContainer}>
         <Text>+ create</Text>
+        <Playlist />
       </View>
     );
   }
@@ -96,7 +97,7 @@ export default createAppContainer(
       }
     },
     {
-      initialRouteName: 'Search',
+      initialRouteName: 'Home',
       order: ['Home', 'Search', 'Chat'],
       // defaultNavigationOptions: {
       //   headerStyle: {
