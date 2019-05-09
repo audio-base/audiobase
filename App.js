@@ -4,28 +4,22 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Chatbox from './components/Chat/Chatbox.js';
+import Search from './components/search.js';
 
 class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={styles.navContainer}>
+      <View style={styles.appContainer}>
         <Text>+ create</Text>
-        {/* <TextInput placeholder="search" /> */}
       </View>
     );
   }
 }
 class SearchScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: ''
-    };
-  }
   render() {
     return (
-      <View style={styles.navContainer}>
-        <TextInput placeholder="search" />
+      <View style={styles.appContainer}>
+        <Search />
       </View>
     );
   }
@@ -61,6 +55,11 @@ class ChatScreen extends React.Component {
           <Chatbox name={this.state.name}/>
       );
     }
+    return (
+      <View style={styles.appContainer}>
+        <Text>let's chat!</Text>
+      </View>
+    );
   }
 }
 
@@ -97,7 +96,7 @@ export default createAppContainer(
       }
     },
     {
-      initialRouteName: 'Home',
+      initialRouteName: 'Search',
       order: ['Home', 'Search', 'Chat'],
       // defaultNavigationOptions: {
       //   headerStyle: {
@@ -110,9 +109,9 @@ export default createAppContainer(
 );
 
 const styles = StyleSheet.create({
-  navContainer: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'flex-start',
     // justifyContent: 'center',
     top: 30,
