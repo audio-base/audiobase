@@ -12,10 +12,11 @@ import { SC_KEY, db } from '../config.js';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-let addItem = (item, title) => {
+let addItem = (item, title, artwork) => {
   db.ref('/songs').push({
     uri: item,
-    title: title
+    title: title,
+    artwork: artwork
   });
 };
 
@@ -28,7 +29,7 @@ class Search extends React.Component {
       query: '',
       uri: '',
       title: '',
-      album: ''
+      artwork: ''
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.addSong = this.addSong.bind(this);
@@ -52,14 +53,14 @@ class Search extends React.Component {
       )
       .catch(error => console.error(error));
   }
-  addSong(uri, title, album) {
+  addSong(uri, title, artwork) {
     this.setState(
       {
         uri: uri,
         title: title,
-        album: album
+        artwork: artwork
       },
-      () => addItem(this.state.uri, this.state.title)
+      () => addItem(this.state.uri, this.state.title, this.state.artwork)
     );
   }
 
@@ -83,8 +84,7 @@ class Search extends React.Component {
               <ListItem
                 leftAvatar={{
                   source: {
-                    uri:
-                      'https://i1.sndcdn.com/artworks-000473021343-9xjedj-large.jpg'
+                    uri: obj.artwork_url ? obj.artwork_url : obj.user.avatar_url
                   }
                 }}
                 title={obj.title}
@@ -97,8 +97,8 @@ class Search extends React.Component {
                     onPress={() =>
                       this.addSong(
                         obj.uri,
-                        obj.title
-                        // obj.user.visuals.visuals[0].visual_url
+                        obj.title,
+                        obj.artwork_url ? obj.artwork_url : obj.user.avatar_url
                       )
                     }
                   />
@@ -108,20 +108,6 @@ class Search extends React.Component {
           );
         })}
       </View>
-      // <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-      //   <FlatList
-      //     data={this.state.data}
-      //     renderItem={this.state.data.map((item, i) => (
-      //       <ListItem
-      //         roundAvatar
-      //         title={`${item.title}`}
-      //         avatar={{ uri: item.artwork_url }}
-      //         containerStyle={{ borderBottomWidth: 0 }}
-      //       />
-      //     ))}
-      //     keyExtractor={item => item.title}
-      //   />
-      // </List>
     );
   }
 }

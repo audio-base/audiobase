@@ -38,7 +38,6 @@ class Playlist extends React.Component {
   }
 
   handleRemove(id) {
-    // console.log(id);
     return songsRef.child(id).remove();
   }
 
@@ -50,8 +49,7 @@ class Playlist extends React.Component {
             <ListItem
               leftAvatar={{
                 source: {
-                  uri:
-                    'https://i1.sndcdn.com/artworks-000473021343-9xjedj-large.jpg'
+                  uri: song.artwork
                 }
               }}
               title={song.title}
