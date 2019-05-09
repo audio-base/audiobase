@@ -7,7 +7,7 @@ let firebaseConfig = {
   projectId: 'audiobase-playlist',
   storageBucket: 'audiobase-playlist.appspot.com',
   messagingSenderId: '492271283471',
-  appId: '1:492271283471:web:1153f74bc7984f03'
+  appId: ''
 };
 let app = Firebase.initializeApp(firebaseConfig);
 let db = app.database();
