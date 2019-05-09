@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import firebaseConfig from '../../config.js';
 
 class Fire {
   constructor() {
@@ -8,15 +9,7 @@ class Fire {
 
   init = () => {
     if (!firebase.apps.length) {
-      firebase.initializeApp({
-        apiKey: "AIzaSyA6mx7XtCaz-y1YZ2ZqqvM2GnloMn7T_SI",
-        authDomain: "audiobase-chat.firebaseapp.com",
-        databaseURL: "https://audiobase-chat.firebaseio.com",
-        projectId: "audiobase-chat",
-        storageBucket: "audiobase-chat.appspot.com",
-        messagingSenderId: "587502341898",
-        appId: "1:587502341898:web:c9901f44f9da377a"
-      });
+      firebase.initializeApp(firebaseConfig);
     }
   };
 
@@ -62,7 +55,7 @@ class Fire {
   get timestamp() {
     return firebase.database.ServerValue.TIMESTAMP;
   }
-  // send the message to the Backend
+  // send message to firebase
   send = messages => {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
@@ -77,7 +70,7 @@ class Fire {
 
   append = message => this.ref.push(message);
 
-  // close the connection to the Backend
+  // close connection
   off() {
     this.ref.off();
   }
