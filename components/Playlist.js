@@ -10,11 +10,7 @@ import {
 import { List, ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { db } from '../config.js';
-let addItem = item => {
-  db.ref('/items').push({
-    name: item
-  });
-};
+
 let songsRef = db.ref('/songs'); //grab songs from the key songs in db
 
 class Playlist extends React.Component {
@@ -63,7 +59,6 @@ class Playlist extends React.Component {
                 />
               }
             />
-            {/* <Button title="-" /> */}
           </View>
         ))}
       </View>
